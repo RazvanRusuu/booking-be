@@ -27,7 +27,9 @@ router.post(
       });
 
       if (user) {
-        return res.status(400).json({ message: "Failed" });
+        return res
+          .status(400)
+          .json({ message: "A user with this mail already exist" });
       }
 
       user = new User(req.body);
