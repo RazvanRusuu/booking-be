@@ -7,7 +7,9 @@ import cookieParser from "cookie-parser";
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
 
-mongoose.connect(process.env.MONGODB_URL as string);
+mongoose
+  .connect(process.env.MONGODB_URL as string)
+  .then(() => console.log("Connected to databse", process.env.MONGODB_URL));
 
 const app = express();
 app.use(cookieParser());
