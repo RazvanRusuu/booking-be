@@ -33,7 +33,7 @@ router.post(
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
-        return res.status(400).json("Invalid Credentials");
+        return res.status(400).json({ message: "Invalid Credentials" });
       }
 
       const token = jwt.sign(
@@ -57,6 +57,14 @@ router.post(
 
 router.get("/me", verifyToken, async (req: Request, res: Response) => {
   res.status(200).json({ userId: req.userId });
+});
+
+router.post("/logout", (req: Request, res: Response) => {
+  res.cookie("auth_token", "", {
+    expires: new Date(0),
+  });
+
+  res.status(200).json({ message: "OK" });
 });
 
 export default router;
