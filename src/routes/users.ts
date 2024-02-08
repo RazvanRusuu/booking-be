@@ -17,9 +17,10 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
-      return res.status(200).json({ message: errors.array() });
+      return res
+        .status(400)
+        .json({ message: "Field error", fieldErrors: errors.array() });
     }
     try {
       let user = await User.findOne({
@@ -27,9 +28,12 @@ router.post(
       });
 
       if (user) {
-        return res
-          .status(400)
-          .json({ message: "A user with this mail already exist" });
+        return res.status(400).json({
+          message: "A user with this mail already exist",
+          fieldErrors: [
+            { msg: "A user with this mail already exist", path: "email" },
+          ],
+        });
       }
 
       user = new User(req.body);
