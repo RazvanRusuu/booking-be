@@ -13,7 +13,7 @@ cloudinary.config({
 
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
-import hotelsRouter from "./routes/myHotels";
+import hotelsRouter from "./routes/my-hotels";
 
 mongoose
   .connect(process.env.MONGODB_URL as string)
