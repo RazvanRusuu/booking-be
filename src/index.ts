@@ -5,15 +5,15 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
 
+import userRoutes from "./routes/users";
+import authRoutes from "./routes/auth";
+import hotelsRouter from "./routes/my-hotels";
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
-import userRoutes from "./routes/users";
-import authRoutes from "./routes/auth";
-import hotelsRouter from "./routes/my-hotels";
 
 mongoose
   .connect(process.env.MONGODB_URL as string)
