@@ -27,7 +27,7 @@ app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/hotels", hotelsRouter);
+app.use("/api/my-hotels", hotelsRouter);
 
 app.listen(8000, () => {
   console.log("app listen to 8000");

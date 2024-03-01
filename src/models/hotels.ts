@@ -7,7 +7,7 @@ export interface IHotel {
   city: string;
   country: string;
   description: string;
-  type: string;
+  type: string[];
   adultCount: number;
   childCount: number;
   facilities: string[];
@@ -38,10 +38,12 @@ const HotelSchema = new mongoose.Schema<IHotel>({
     type: String,
     required: [true, "A hotel must have a desciption"],
   },
-  type: {
-    type: String,
-    required: [true, "A hotel must have a type"],
-  },
+  type: [
+    {
+      type: String,
+      required: [true, "A hotel must have a type"],
+    },
+  ],
   adultCount: {
     type: Number,
     required: [true, "A hotel must have a capacity"],

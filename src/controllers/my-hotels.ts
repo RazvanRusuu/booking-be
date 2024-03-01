@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import multer from "multer";
 import cloudinary from "cloudinary";
 import Hotel, { IHotel } from "../models/hotels";
+import { validationResult } from "express-validator";
 
 const storage = multer.memoryStorage();
-
-const upload = multer({
+export const upload = multer({
   storage: storage,
   limits: {
     fileSize: 5 * 1024 * 1024,
@@ -17,7 +17,15 @@ export const uploadImages = () => {
 };
 
 export const addHotels = async (req: Request, res: Response) => {
+  console.log(req.body);
   try {
+    const errors = validationResult(req.body);
+    if (!errors.isEmpty()) {
+      return res
+        .status(400)
+        .json({ message: "Field error", fieldErrors: errors.array() });
+    }
+
     const imageFiles = req.files as Express.Multer.File[];
     const newHotel: IHotel = req.body;
 
