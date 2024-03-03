@@ -1,6 +1,11 @@
 import express from "express";
 import { verifyToken } from "../middleware/auth";
-import { addHotels, upload, uploadImages } from "../controllers/my-hotels";
+import {
+  addHotels,
+  getHotels,
+  upload,
+  uploadImages,
+} from "../controllers/my-hotels";
 import { body } from "express-validator";
 
 const router = express.Router();
@@ -18,12 +23,9 @@ const validateBody = [
   body("facilities").notEmpty().isArray().withMessage("Facilities is required"),
 ];
 
-router.post(
-  "/",
-  verifyToken,
-  validateBody,
-  upload.array("imageFiles", 6),
-  addHotels
-);
+router
+  .route("/")
+  .post(verifyToken, validateBody, upload.array("imageFiles", 6), addHotels)
+  .get(verifyToken, getHotels);
 
 export default router;

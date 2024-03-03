@@ -17,7 +17,6 @@ export const uploadImages = () => {
 };
 
 export const addHotels = async (req: Request, res: Response) => {
-  console.log(req.body);
   try {
     const errors = validationResult(req.body);
     if (!errors.isEmpty()) {
@@ -40,6 +39,7 @@ export const addHotels = async (req: Request, res: Response) => {
     newHotel.imageUrls = imageUrls;
     newHotel.lastUpdated = new Date();
     newHotel.userId = req.userId;
+    console.log(newHotel);
     const hotel = new Hotel(newHotel);
 
     await hotel.save();
@@ -47,6 +47,16 @@ export const addHotels = async (req: Request, res: Response) => {
     res.status(201).send({ message: "success", data: hotel });
   } catch (error) {
     console.log(`Error creating hotel ${error}`);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const getHotels = async (req: Request, res: Response) => {
+  try {
+    const hotel = await Hotel.find({ userId: req.userId });
+
+    return res.status(200).json({ message: "success", data: hotel });
+  } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
